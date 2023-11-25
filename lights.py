@@ -82,6 +82,12 @@ while True:
         if event == ('kytkin_iso1', 'off'):
             set_lamp_prefixes(('eteinen',), 'OFF')
 
+        # Työhuone
+        if event == ('kytkin_pieni1', 'on'):
+            set_lamp_prefixes(('työhuone',), 'ON')
+        if event == ('kytkin_pieni1', 'off'):
+            set_lamp_prefixes(('työhuone',), 'OFF')
+
         if event[1] in ('brightness_up_hold', 'brightness_move_up'):
             print('all on')
             set_lamp_prefixes(('', ), 'ON')
