@@ -76,7 +76,7 @@ while True:
         if event == ('kytkin_iso2', 'off'):
             set_lamp_prefixes(('olohuone',), 'OFF')
 
-        # Olohuone
+        # Eteinen
         if event == ('kytkin_iso1', 'on'):
             set_lamp_prefixes(('eteinen',), 'ON')
         if event == ('kytkin_iso1', 'off'):
