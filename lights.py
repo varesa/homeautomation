@@ -6,6 +6,11 @@ from traceback import print_exc
 
 DEVICES_TOPIC = 'zigbee2mqtt/bridge/devices'
 
+UP_SHORT = ('brightness_up_click', 'on')
+UP_LONG = ('brightness_up_hold', 'brightness_move_up')
+DOWN_SHORT = ('brightness_down_click', 'off')
+DOWN_LONG = ('brightness_down_hold', 'brightness_move_down')
+
 lamps = set()
 events = []
 action = ""
@@ -53,7 +58,6 @@ def set_lamp_prefixes(lamp_prefixes: list[str], state: str):
             if lamp.startswith(prefix):
                 set_lamp(lamp, state)
 
-
 while True:
     sleep(0.1)
 
@@ -63,33 +67,33 @@ while True:
     events_copy = events.copy()
     events.clear()
 
-    for event in events_copy:
+    for location, action in events_copy:
         # Keittiö
-        if event == ('kytkin_pyöreä1', 'brightness_up_click'):
+        if location == 'kytkin_pyöreä1' and action in UP_LONG:
             set_lamp_prefixes(('keittiö', 'ruokapöytä'), 'ON')
-        if event == ('kytkin_pyöreä1', 'brightness_down_click'):
+        if location == 'kytkin_pyöreä1' and action in DOWN_LONG:
             set_lamp_prefixes(('keittiö', 'ruokapöytä'), 'OFF')
 
         # Olohuone
-        if event == ('kytkin_iso2', 'on'):
+        if location == 'kytkin_iso2' and action in UP_LONG:
             set_lamp_prefixes(('olohuone',), 'ON')
-        if event == ('kytkin_iso2', 'off'):
+        if location == 'kytkin_iso2' and action in DOWN_LONG:
             set_lamp_prefixes(('olohuone',), 'OFF')
 
         # Eteinen
-        if event == ('kytkin_iso1', 'on'):
+        if location == 'kytkin_iso1' and action in UP_LONG:
             set_lamp_prefixes(('eteinen',), 'ON')
-        if event == ('kytkin_iso1', 'off'):
+        if location == 'kytkin_iso1' and action in DOWN_LONG:
             set_lamp_prefixes(('eteinen',), 'OFF')
 
         # Työhuone
-        if event == ('kytkin_pieni1', 'on'):
+        if location == 'kytkin_pieni1' and action in UP_LONG:
             set_lamp_prefixes(('työhuone',), 'ON')
-        if event == ('kytkin_pieni1', 'off'):
+        if location == 'kytkin_pieni1' and action in DOWN_LONG:
             set_lamp_prefixes(('työhuone',), 'OFF')
 
-        if event[1] in ('brightness_up_hold', 'brightness_move_up'):
+        if action in UP_SHORT:
             print('all on')
             set_lamp_prefixes(('', ), 'ON')
-        if event[1] in ('brightness_down_hold', 'brightness_move_down'):
+        if action in DOWN_SHORT:
             set_lamp_prefixes(('', ), 'OFF')
