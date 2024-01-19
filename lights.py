@@ -58,42 +58,43 @@ def set_lamp_prefixes(lamp_prefixes: list[str], state: str):
             if lamp.startswith(prefix):
                 set_lamp(lamp, state)
 
-while True:
-    sleep(0.1)
+if __name__ == "__main__":
+    while True:
+        sleep(0.1)
 
-    if not events:
-        continue
+        if not events:
+            continue
 
-    events_copy = events.copy()
-    events.clear()
+        events_copy = events.copy()
+        events.clear()
 
-    for location, action in events_copy:
-        # Keittiö
-        if location == 'kytkin_pyöreä1' and action in UP_LONG:
-            set_lamp_prefixes(('keittiö', 'ruokapöytä'), 'ON')
-        if location == 'kytkin_pyöreä1' and action in DOWN_LONG:
-            set_lamp_prefixes(('keittiö', 'ruokapöytä'), 'OFF')
+        for location, action in events_copy:
+            # Keittiö
+            if location == 'kytkin_pyöreä1' and action in UP_LONG:
+                set_lamp_prefixes(('keittiö', 'ruokapöytä'), 'ON')
+            if location == 'kytkin_pyöreä1' and action in DOWN_LONG:
+                set_lamp_prefixes(('keittiö', 'ruokapöytä'), 'OFF')
 
-        # Olohuone
-        if location == 'kytkin_iso2' and action in UP_LONG:
-            set_lamp_prefixes(('olohuone',), 'ON')
-        if location == 'kytkin_iso2' and action in DOWN_LONG:
-            set_lamp_prefixes(('olohuone',), 'OFF')
+            # Olohuone
+            if location == 'kytkin_iso2' and action in UP_LONG:
+                set_lamp_prefixes(('olohuone',), 'ON')
+            if location == 'kytkin_iso2' and action in DOWN_LONG:
+                set_lamp_prefixes(('olohuone',), 'OFF')
 
-        # Eteinen
-        if location == 'kytkin_iso1' and action in UP_LONG:
-            set_lamp_prefixes(('eteinen',), 'ON')
-        if location == 'kytkin_iso1' and action in DOWN_LONG:
-            set_lamp_prefixes(('eteinen',), 'OFF')
+            # Eteinen
+            if location == 'kytkin_iso1' and action in UP_LONG:
+                set_lamp_prefixes(('eteinen',), 'ON')
+            if location == 'kytkin_iso1' and action in DOWN_LONG:
+                set_lamp_prefixes(('eteinen',), 'OFF')
 
-        # Työhuone
-        if location == 'kytkin_pieni1' and action in UP_LONG:
-            set_lamp_prefixes(('työhuone',), 'ON')
-        if location == 'kytkin_pieni1' and action in DOWN_LONG:
-            set_lamp_prefixes(('työhuone',), 'OFF')
+            # Työhuone
+            if location == 'kytkin_pieni1' and action in UP_LONG:
+                set_lamp_prefixes(('työhuone',), 'ON')
+            if location == 'kytkin_pieni1' and action in DOWN_LONG:
+                set_lamp_prefixes(('työhuone',), 'OFF')
 
-        if action in UP_SHORT:
-            print('all on')
-            set_lamp_prefixes(('', ), 'ON')
-        if action in DOWN_SHORT:
-            set_lamp_prefixes(('', ), 'OFF')
+            if action in UP_SHORT:
+                print('all on')
+                set_lamp_prefixes(('', ), 'ON')
+            if action in DOWN_SHORT:
+                set_lamp_prefixes(('', ), 'OFF')
