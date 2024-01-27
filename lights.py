@@ -17,6 +17,7 @@ action = ""
 
 def on_connect(client, userdata, flags, rc):
     print("Connected")
+    client.subscribe(DEVICES_TOPIC)
 
 
 def on_message(client, userdata, message):
@@ -44,7 +45,6 @@ client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
 client.connect('localhost')
-client.subscribe(DEVICES_TOPIC)
 client.loop_start()
 
 
