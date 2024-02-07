@@ -73,7 +73,7 @@ if __name__ == "__main__":
             if state == jellyfin.PLAYING:
                 set_lamp_except_prefixes(('olohuone3', 'eteinen2'), "OFF")
                 set_brightness_prefixes(('olohuone3', 'eteinen2'), "10")
-            else:
+            elif last_state is not None:
                 set_lamp_prefixes(('',), "ON")
                 set_brightness_prefixes(('',), "255")
 

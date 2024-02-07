@@ -1,5 +1,6 @@
 import requests
 import os
+import time
 
 STOPPED = 0
 PAUSED = 1
@@ -10,7 +11,15 @@ api = f'{os.environ["URL"]}/Sessions'
 
 def get_state():
 
-    resp = requests.get(api, headers={'Authorization': authorization})
+    for _ in range(30):
+        try:
+            resp = requests.get(api, headers={'Authorization': authorization})
+            break
+        except Exception as e:
+            print(e)
+            time.sleep(5)
+    else:
+        raise Exception("Error connecting to jellyfin")
     sessions = resp.json()
 
     state = STOPPED
